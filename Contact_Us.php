@@ -3,6 +3,12 @@
 $contact_info = [];
 if (file_exists('data/contact_info.json')) {
     $contact_info = json_decode(file_get_contents("data/contact_info.json"), true);
+} else {
+    // Provide a default empty structure if file doesn't exist
+    $contact_info = [
+        "susan" => ["cell_phone" => "", "telephone" => "", "email" => "", "fax" => "", "photo" => ""],
+        "danny" => ["cell_phone" => "", "email" => "", "photo" => ""]
+    ];
 }
 
 // Load Services from CSV for navigation dropdown
@@ -58,7 +64,7 @@ if (file_exists('data/images.json')) {
                                     'construction' => './Construction.php',
                                     'signage' => './Signage.php',
                                     'professional services' => './Professional-Services.php',
-                                    'personal protective equipment' => './PPE.php' // Corrected key to match full lowercase name
+                                    'personal protective equipment' => './PPE.php'
                                 ];
                                 foreach ($services as $service):
                                     $service_name_lower = strtolower($service['name']);
@@ -94,7 +100,7 @@ if (file_exists('data/images.json')) {
                 'construction' => './Construction.php',
                 'signage' => './Signage.php',
                 'professional services' => './Professional-Services.php',
-                'personal protective equipment' => './PPE.php' // Corrected key to match full lowercase name
+                'personal protective equipment' => './PPE.php'
             ];
             foreach ($services as $service):
                 $service_name_lower = strtolower($service['name']);
@@ -102,7 +108,7 @@ if (file_exists('data/images.json')) {
             ?>
             <li><a href="<?php echo htmlspecialchars($link_href); ?>" class="block py-2 px-4 rounded hover:bg-gray-700"><?php echo htmlspecialchars($service['name']); ?></a></li>
             <?php endforeach; ?>
-            <li><a href="./Contact_Us.php" class="block py-2 px-4 rounded hover:bg-gray-700 active">Contact Us</a></li>
+            <li><a href="./Contact_Us.php" class="block py-2 px-4 rounded hover:bg-gray-700">Contact Us</a></li>
         </ul>
     </div>
 
@@ -182,7 +188,7 @@ if (file_exists('data/images.json')) {
     <footer class="bg-gray-200 text-black">
         <div class="container mx-auto px-4 py-6 text-center">
             <p>&copy; Copyright AGTE Always Good Trading Enterprise 2025 (All Rights Reserved)</p>
-            
+            <img src="images/Copywrite%20design.png" alt="Design" class="mx-auto mt-2 h-6" onerror="this.onerror=null;this.src='https://placehold.co/174x25/cccccc/000000?text=Design';">
             <div class="mt-4">
                 <a href="./admin-login.html" class="text-sm text-gray-500 hover:text-gray-700">Admin Login</a>
             </div>

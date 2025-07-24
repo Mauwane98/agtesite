@@ -49,7 +49,7 @@ if (file_exists('data/clients.csv') && ($handle = fopen("data/clients.csv", "r")
     fclose($handle);
 }
 
-// Load Signage Types from JSON (NEW DATA FILE)
+// Load Signage Types from JSON
 $signage_types = [];
 if (file_exists('data/signage_types.json')) {
     $signage_types = json_decode(file_get_contents("data/signage_types.json"), true);
@@ -151,7 +151,7 @@ if (file_exists('data/signage_types.json')) {
                     <li><a href="#projects" class="admin-nav-link" data-target-section="projects">Manage Projects</a></li>
                     <li><a href="#clients" class="admin-nav-link" data-target-section="clients">Manage Clients</a></li>
                     <li><a href="#services" class="admin-nav-link" data-target-section="services">Manage Services</a></li>
-                    <li><a href="#signage-types" class="admin-nav-link" data-target-section="signage-types">Manage Signage Types</a></li> <!-- NEW LINK -->
+                    <li><a href="#signage-types" class="admin-nav-link" data-target-section="signage-types">Manage Signage Types</a></li>
                     <li><a href="#contact" class="admin-nav-link" data-target-section="contact">Manage Contact Us</a></li>
                     <li><a href="#images" class="admin-nav-link" data-target-section="images">Manage Website Images</a></li>
                 </ul>
@@ -352,7 +352,7 @@ if (file_exists('data/signage_types.json')) {
                     </div>
                 </div>
 
-                <!-- Manage Signage Types Section (NEW SECTION) -->
+                <!-- Manage Signage Types Section -->
                 <div id="signage-types" class="bg-white shadow-md rounded-lg overflow-hidden mb-8">
                     <div class="p-4">
                         <h3 class="text-xl font-semibold text-gray-700">Manage Signage Types</h3>
@@ -575,51 +575,35 @@ if (file_exists('data/signage_types.json')) {
 
                         <!-- Signage Types Images Forms (Moved and Renamed for clarity) -->
                         <h4 class="col-span-full font-semibold text-lg text-gray-700 mb-4 border-b pb-2">Signage Type Showcase Images</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start mb-6">
-                            <!-- Government & Corporate Signage Form -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start mb-6 pb-6">
+                            <?php for ($i = 1; $i <= 4; $i++):
+                                // Map generic loop index to specific image keys
+                                $signage_type_keys = [
+                                    1 => 'signage_gov',
+                                    2 => 'signage_construction',
+                                    3 => 'signage_safety',
+                                    4 => 'signage_business'
+                                ];
+                                $current_image_key = $signage_type_keys[$i];
+                                $display_name = '';
+                                switch($current_image_key) {
+                                    case 'signage_gov': $display_name = 'Government Signage'; break;
+                                    case 'signage_construction': $display_name = 'Construction Signage'; break;
+                                    case 'signage_safety': $display_name = 'Safety Signage'; break;
+                                    case 'signage_business': $display_name = 'Business Signage'; break;
+                                }
+                            ?>
                             <form action="manage_single_image.php#images" method="POST" enctype="multipart/form-data" class="form-group-image border p-4 rounded-md shadow-sm">
-                                <input type="hidden" name="image_key" value="signage_gov">
-                                <label class="form-label">Current Government Signage</label>
-                                <img id="signage_gov-preview" src="images/<?php echo htmlspecialchars($site_images['signage_gov'] ?? ''); ?>" class="form-image-preview w-full h-32">
-                                <label for="signage_gov" class="form-label">Upload New Gov. Signage</label>
-                                <input type="file" name="image_file" id="signage_gov" class="form-input-file">
+                                <input type="hidden" name="image_key" value="<?php echo htmlspecialchars($current_image_key); ?>">
+                                <label class="form-label">Current <?php echo htmlspecialchars($display_name); ?></label>
+                                <img id="<?php echo htmlspecialchars($current_image_key); ?>-preview" src="images/<?php echo htmlspecialchars($site_images[$current_image_key] ?? ''); ?>" class="form-image-preview w-full h-32">
+                                <label for="<?php echo htmlspecialchars($current_image_key); ?>" class="form-label">Upload New <?php echo htmlspecialchars($display_name); ?></label>
+                                <input type="file" name="image_file" id="<?php echo htmlspecialchars($current_image_key); ?>" class="form-input-file">
                                 <div class="mt-4 text-right w-full">
-                                    <button type="submit" class="action-button">Update Gov. Signage</button>
+                                    <button type="submit" class="action-button">Update <?php echo htmlspecialchars($display_name); ?></button>
                                 </div>
                             </form>
-                            <!-- Construction Signage Form -->
-                            <form action="manage_single_image.php#images" method="POST" enctype="multipart/form-data" class="form-group-image border p-4 rounded-md shadow-sm">
-                                <input type="hidden" name="image_key" value="signage_construction">
-                                <label class="form-label">Current Construction Signage</label>
-                                <img id="signage_construction-preview" src="images/<?php echo htmlspecialchars($site_images['signage_construction'] ?? ''); ?>" class="form-image-preview w-full h-32">
-                                <label for="signage_construction" class="form-label">Upload New Const. Signage</label>
-                                <input type="file" name="image_file" id="signage_construction" class="form-input-file">
-                                <div class="mt-4 text-right w-full">
-                                    <button type="submit" class="action-button">Update Const. Signage</button>
-                                </div>
-                            </form>
-                            <!-- Safety Signage Form -->
-                            <form action="manage_single_image.php#images" method="POST" enctype="multipart/form-data" class="form-group-image border p-4 rounded-md shadow-sm">
-                                <input type="hidden" name="image_key" value="signage_safety">
-                                <label class="form-label">Current Safety Signage</label>
-                                <img id="signage_safety-preview" src="images/<?php echo htmlspecialchars($site_images['signage_safety'] ?? ''); ?>" class="form-image-preview w-full h-32">
-                                <label for="signage_safety" class="form-label">Upload New Safety Signage</label>
-                                <input type="file" name="image_file" id="signage_safety" class="form-input-file">
-                                <div class="mt-4 text-right w-full">
-                                    <button type="submit" class="action-button">Update Safety Signage</button>
-                                </div>
-                            </form>
-                            <!-- Business Signage Form -->
-                            <form action="manage_single_image.php#images" method="POST" enctype="multipart/form-data" class="form-group-image border p-4 rounded-md shadow-sm">
-                                <input type="hidden" name="image_key" value="signage_business">
-                                <label class="form-label">Current Business Signage</label>
-                                <img id="signage_business-preview" src="images/<?php echo htmlspecialchars($site_images['signage_business'] ?? ''); ?>" class="form-image-preview w-full h-32">
-                                <label for="signage_business" class="form-label">Upload New Business Signage</label>
-                                <input type="file" name="image_file" id="signage_business" class="form-input-file">
-                                <div class="mt-4 text-right w-full">
-                                    <button type="submit" class="action-button">Update Business Signage</button>
-                                </div>
-                            </form>
+                            <?php endfor; ?>
                         </div>
 
                         <!-- Signage Team Images Forms -->
