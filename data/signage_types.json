@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Government & Corporate",
+    "description": "Professional building identification, official government signage, and regulatory signs for public institutions, offices, and utilities.",
+    "image_key": "signage_gov"
+  },
+  {
+    "name": "Construction Sites",
+    "description": "Durable, weather-resistant signs for safety, directional, and informational purposes on construction sites.",
+    "image_key": "signage_construction"
+  },
+  {
+    "name": "Safety Signs",
+    "description": "Clear and compliant safety signs for various industrial and commercial environments, meeting all regulatory standards.",
+    "image_key": "signage_safety"
+  },
+  {
+    "name": "Business & Retail",
+    "description": "Attractive storefront signs, office branding, window graphics, and interior signage designed to boost visibility and strengthen brand identity.",
+    "image_key": "signage_business"
+  }
+]

@@ -1,26 +1,87 @@
-.about-section {
-    margin-bottom: 3rem; /* 48px */
+/* General "Our Story" section styling */
+.about-story-section h2 {
+    /* Styles for the "Our Story" title, if different from page-section-title */
 }
 
-.section-title {
-    color: #DBFB00;
-    font-size: 2.25rem; /* 36px */
-    font-weight: 700;
-    margin-bottom: 1.5rem; /* 24px */
-    border-bottom: 2px solid #DBFB00;
-    padding-bottom: 0.5rem;
-    display: inline-block;
+/* Mission & Vision Section */
+.mission-vision-section {
+    /* Add any specific grid or flex adjustments if needed, though Tailwind handles much of this */
 }
 
-.section-content {
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.8;
+.mission-vision-section .bg-gray-100 {
+    /* Styles for the mission/vision cards */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.section-content ul {
-    padding-left: 1.5rem;
+.mission-vision-section .bg-gray-100:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
-.section-content li {
+.mission-vision-section h3 {
+    /* Styles for "Our Mission" and "Our Vision" titles */
+    font-size: 1.875rem; /* text-3xl */
+    color: #DBFB00; /* Yellow from your branding */
+    margin-bottom: 1rem;
+}
+
+.mission-vision-section p {
+    /* Styles for the mission/vision text */
+    line-height: 1.75; /* leading-relaxed */
+    color: #4a5568; /* A slightly darker gray for readability */
+}
+
+/* Values Section */
+.values-section h2 {
+    /* Styles for "Our Values" title, if different */
+}
+
+.value-card {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.value-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 700; /* font-bold */
+    color: #2d3748; /* Dark gray for titles */
     margin-bottom: 0.75rem;
+}
+
+.value-text {
+    font-size: 1rem; /* text-base */
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+/* Ensure consistent spacing and responsiveness for sections */
+.container {
+    max-width: 1200px; /* Or adjust based on your design */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive adjustments for text and spacing */
+@media (max-width: 768px) { /* md breakpoint */
+    .about-story-section p,
+    .mission-vision-section p,
+    .value-text {
+        font-size: 0.95rem; /* Slightly smaller text on mobile */
+    }
+    .mission-vision-section h3,
+    .value-title {
+        font-size: 1.6rem; /* Adjust heading sizes */
+    }
 }

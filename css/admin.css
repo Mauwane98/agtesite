@@ -1,0 +1,108 @@
+.admin-nav-link {
+    display: block;
+    padding: 1rem 1.5rem;
+    color: #cbd5e0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.admin-nav-link:hover, .admin-nav-link.active {
+    background-color: #4a5568;
+    color: #DBFB00;
+}
+
+.stat-card {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.stat-title {
+    font-size: 1rem;
+    color: #4a5568;
+    font-weight: 600;
+}
+
+.stat-value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-top: 0.5rem;
+}
+
+.table-header {
+    padding: 1rem;
+    text-align: left;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4a5568;
+    text-transform: uppercase;
+    border-bottom: 2px solid #e2e8f0;
+    background-color: #f7fafc;
+}
+
+.table-cell {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.status-chip {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-chip.in-progress {
+    background-color: #fefcbf;
+    color: #b45309;
+}
+
+.status-chip.completed {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-chip.pending {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Form Styles */
+.form-label {
+    display: block;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    background-color: #f7fafc;
+    border: 1px solid #e2e8f0;
+    color: #2d3748;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #DBFB00;
+    background-color: #ffffff;
+}
+
+.action-button {
+    background-color: #DBFB00;
+    color: #2d3748;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #c2e000;
+}

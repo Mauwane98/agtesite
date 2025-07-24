@@ -1,3 +1,18 @@
+<?php
+// Load Services from CSV for navigation dropdown
+$services = [];
+if (file_exists('data/services.csv') && ($handle = fopen("data/services.csv", "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        $services[] = ['name' => $data[0], 'description' => $data[1], 'image' => $data[2]];
+    }
+    fclose($handle);
+}
+// Load general website images from JSON
+$site_images = [];
+if (file_exists('data/images.json')) {
+    $site_images = json_decode(file_get_contents("data/images.json"), true);
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,28 +31,38 @@
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-3">
                 <div>
-                    <a href="./index.html">
-                        <img src="images/AGTE%20Logo.png" alt="AGTE Logo" class="h-16 md:h-20" onerror="this.onerror=null;this.src='https://placehold.co/218x119/cccccc/000000?text=AGTE+Logo';">
+                    <a href="./index.php">
+                        <img src="images/<?php echo htmlspecialchars($site_images['logo'] ?? 'AGTE%20Logo.png'); ?>" alt="AGTE Logo" class="h-16 md:h-20" onerror="this.onerror=null;this.src='https://placehold.co/218x119/cccccc/000000?text=AGTE+Logo';">
                     </a>
                 </div>
                 <div class="hidden lg:block">
-                     <img src="images/AGTE%20Banner.png" alt="AGTE Banner" class="h-16" onerror="this.onerror=null;this.src='https://placehold.co/694x106/cccccc/000000?text=AGTE+Banner';">
+                     <img src="images/<?php echo htmlspecialchars($site_images['banner'] ?? 'AGTE%20Banner.png'); ?>" alt="AGTE Banner" class="h-16" onerror="this.onerror=null;this.src='https://placehold.co/694x106/cccccc/000000?text=AGTE+Banner';">
                 </div>
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center">
                      <ul class="flex space-x-6 text-lg">
-                        <li><a href="./index.html" class="nav-link">Home</a></li>
-                        <li><a href="./About_Us.html" class="nav-link">About Us</a></li>
+                        <li><a href="./index.php" class="nav-link">Home</a></li>
+                        <li><a href="./About_Us.php" class="nav-link">About Us</a></li>
                         <li class="relative nav-item-services">
-                            <a href="./Services.html" class="nav-link active">Services</a>
+                            <a href="./Services.php" class="nav-link active">Services</a>
                             <ul class="absolute dropdown-menu dropdown-hidden mt-2 w-48 overflow-hidden">
-                                <li><a href="./Construction.html" class="sub-nav-link">Construction</a></li>
-                                <li><a href="./Signage.html" class="sub-nav-link">Signage</a></li>
-                                <li><a href="./Professional-Services.html" class="sub-nav-link active">Professional Services</a></li>
-                                <li><a href="./PPE.html" class="sub-nav-link">PPE</a></li>
+                                <?php
+                                // Define the mapping for service names to their respective page files
+                                $service_pages = [
+                                    'construction' => './Construction.php',
+                                    'signage' => './Signage.php',
+                                    'professional services' => './Professional-Services.php', // Updated to .php
+                                    'personal protective equipment' => './PPE.php' // Corrected key to match full lowercase name
+                                ];
+                                foreach ($services as $service):
+                                    $service_name_lower = strtolower($service['name']);
+                                    $link_href = $service_pages[$service_name_lower] ?? 'service.php?name=' . urlencode($service_name_lower);
+                                ?>
+                                <li><a href="<?php echo htmlspecialchars($link_href); ?>" class="sub-nav-link <?php echo (strtolower($service['name']) == 'professional services') ? 'active' : ''; ?>"><?php echo htmlspecialchars($service['name']); ?></a></li>
+                                <?php endforeach; ?>
                             </ul>
                         </li>
-                        <li><a href="./Contact_Us.html" class="nav-link">Contact Us</a></li>
+                        <li><a href="./Contact_Us.php" class="nav-link">Contact Us</a></li>
                     </ul>
                 </nav>
                  <!-- Mobile Menu Toggle -->
@@ -54,14 +79,24 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="text-white">
         <ul class="flex flex-col space-y-2 p-4 text-lg">
-            <li><a href="./index.html" class="block py-2 px-4 rounded hover:bg-gray-700">Home</a></li>
-            <li><a href="./About_Us.html" class="block py-2 px-4 rounded hover:bg-gray-700">About Us</a></li>
-            <li><a href="./Services.html" class="block py-2 px-4 rounded hover:bg-gray-700 active">Services</a></li>
-            <li><a href="./Construction.html" class="block py-2 px-4 rounded hover:bg-gray-700">Construction</a></li>
-            <li><a href="./Signage.html" class="block py-2 px-4 rounded hover:bg-gray-700">Signage</a></li>
-            <li><a href="./Professional-Services.html" class="block py-2 px-4 rounded hover:bg-gray-700 active">Professional Services</a></li>
-            <li><a href="./PPE.html" class="block py-2 px-4 rounded hover:bg-gray-700">PPE</a></li>
-            <li><a href="./Contact_Us.html" class="block py-2 px-4 rounded hover:bg-gray-700">Contact Us</a></li>
+            <li><a href="./index.php" class="block py-2 px-4 rounded hover:bg-gray-700">Home</a></li>
+            <li><a href="./About_Us.php" class="block py-2 px-4 rounded hover:bg-gray-700">About Us</a></li>
+            <li><a href="./Services.php" class="block py-2 px-4 rounded hover:bg-gray-700 active">Services</a></li>
+            <?php
+            // Define the mapping for service names to their respective page files
+            $service_pages = [
+                'construction' => './Construction.php',
+                'signage' => './Signage.php',
+                'professional services' => './Professional-Services.php', // Updated to .php
+                'personal protective equipment' => './PPE.php' // Corrected key to match full lowercase name
+            ];
+            foreach ($services as $service):
+                $service_name_lower = strtolower($service['name']);
+                $link_href = $service_pages[$service_name_lower] ?? 'service.php?name=' . urlencode($service_name_lower);
+            ?>
+            <li><a href="<?php echo htmlspecialchars($link_href); ?>" class="block py-2 px-4 rounded hover:bg-gray-700 <?php echo (strtolower($service['name']) == 'professional services') ? 'active' : ''; ?>"><?php echo htmlspecialchars($service['name']); ?></a></li>
+            <?php endforeach; ?>
+            <li><a href="./Contact_Us.php" class="block py-2 px-4 rounded hover:bg-gray-700">Contact Us</a></li>
         </ul>
     </div>
 
@@ -69,7 +104,7 @@
     <main>
         <!-- Hero Section -->
         <div class="relative text-center">
-            <img src="images/AGTE%20Head%20Img.jpg" alt="AGTE Header Image" class="w-full h-64 md:h-80 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/1070x357/cccccc/000000?text=Professional+Services';">
+            <img src="images/<?php echo htmlspecialchars($site_images['hero_image'] ?? 'AGTE%20Head%20Img.jpg'); ?>" alt="AGTE Header Image" class="w-full h-64 md:h-80 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/1070x357/cccccc/000000?text=Professional+Services';">
             <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <h1 class="text-white text-4xl md:text-6xl font-bold">Professional Services</h1>
             </div>
@@ -91,7 +126,7 @@
                         </ul>
                     </div>
                     <div>
-                        <img src="images/Safety_pic.jpg" alt="Safety equipment on a construction site" class="rounded-lg shadow-lg w-full" onerror="this.onerror=null;this.src='https://placehold.co/300x226/cccccc/000000?text=Safety+First';">
+                        <img src="images/<?php echo htmlspecialchars($site_images['professional_services_safety_pic'] ?? 'Safety_pic.jpg'); ?>" alt="Safety equipment on a construction site" class="rounded-lg shadow-lg w-full" onerror="this.onerror=null;this.src='https://placehold.co/300x226/cccccc/000000?text=Safety+First';">
                     </div>
                 </div>
             </div>
@@ -117,7 +152,7 @@
                             </ul>
                         </div>
                         <div>
-                            <img src="images/Crossfire.jpg" alt="Crossfire Management Logo" class="client-logo-large" onerror="this.onerror=null;this.src='https://placehold.co/511x212/cccccc/000000?text=Crossfire';">
+                            <img src="images/<?php echo htmlspecialchars($site_images['professional_services_crossfire_logo'] ?? 'Crossfire.jpg'); ?>" alt="Crossfire Management Logo" class="client-logo-large" onerror="this.onerror=null;this.src='https://placehold.co/511x212/cccccc/000000?text=Crossfire';">
                         </div>
                     </div>
                 </div>
@@ -130,7 +165,9 @@
     <footer class="bg-gray-200 text-black">
         <div class="container mx-auto px-4 py-6 text-center">
             <p>&copy; Copyright AGTE Always Good Trading Enterprise 2025 (All Rights Reserved)</p>
-            
+            <div class="mt-4">
+                <a href="./admin-login.html" class="text-sm text-gray-500 hover:text-gray-700">Admin Login</a>
+            </div>
         </div>
     </footer>
 

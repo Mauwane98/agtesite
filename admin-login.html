@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>AGTE - Admin Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin-login.css">
+</head>
+<body class="bg-gray-800 flex items-center justify-center h-screen">
+
+    <div class="login-container">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-yellow-400">AGTE Admin Portal</h1>
+            <p class="text-gray-400">Please sign in to continue</p>
+        </div>
+        <!-- This form now sends data to login_handler.php using the POST method -->
+        <form action="login_handler.php" method="POST">
+            <div class="mb-4">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="username" class="form-input" placeholder="Enter your username" required>
+            </div>
+            <div class="mb-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+            </div>
+            <div>
+                <button type="submit" class="login-button">Sign In</button>
+            </div>
+        </form>
+        <div class="mt-6 text-center">
+            <a href="./index.html" class="text-sm text-gray-400 hover:text-yellow-400">← Back to Website</a>
+        </div>
+    </div>
+
+</body>
+</html>
