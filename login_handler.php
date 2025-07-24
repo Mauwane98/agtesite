@@ -14,7 +14,7 @@ session_start();
 $users = [
     // The username is the key, and the hashed password is the value.
     'admin' => '$2y$10$uU3xo9w1pS2bAyzQzuF22uSvWWx8qKDOTFreLCqHsnxVcristU9gGs', // Example hash for "password123"
-    'susan' => '$2y$10$4hgtvRVA/iML2sG.JiKwAefdCEp0/nvXdaJlbRdcvDC/fekApp2xC'  // Example hash for "securepass"
+    'susan' => '$2y$10$jTqA38Urq0lKHGUQh8ZkFOKlqea6AXhMY/s7j.PtkqeRJkRpJ7E9e'  // Example hash for "securepass"
 ];
 
 // Retrieve the username and password submitted from the login form.
